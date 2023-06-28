@@ -1,12 +1,13 @@
 import tkinter as tk
-from tkinter.filedialog import askopenfilename
 from tkinter import Label, Canvas, Button, StringVar, Entry
+from tkinter.filedialog import askopenfilename
+
 from PIL import ImageTk, Image
 
 
 class MyUI(tk.Tk):
 
-    def __init__(self):
+    def __init__(self, unet, cnn):
         super().__init__()
 
         [self.button_clear_all,
@@ -21,7 +22,7 @@ class MyUI(tk.Tk):
          self.can_lic1,
          self.can_src] = [0] * 11
 
-        self.unet, self.cnn = CNN_init()  # 初始化CNN模型
+        self.unet, self.cnn = unet, cnn
 
         self.setupUI(1000, 600)  # 窗口宽设定1000 窗口高设定600
 
@@ -31,7 +32,7 @@ class MyUI(tk.Tk):
         self.title("车牌定位，矫正和识别软件")
         self.img_src_path = None
 
-        Label(self, text='原图:', font=('微软雅黑', 13)).place(x=0, y=0)
+        # Label(self, text='原图:', font=('微软雅黑', 13)).place(x=0, y=0)
         Label(self, text='车牌区域1:', font=('微软雅黑', 13)).place(x=615, y=0)
         Label(self, text='识别结果1:', font=('微软雅黑', 13)).place(x=615, y=85)
         Label(self, text='车牌区域2:', font=('微软雅黑', 13)).place(x=615, y=180)
@@ -93,15 +94,3 @@ class MyUI(tk.Tk):
         self.img_src_path = None
 
 
-import numpy as np
-from tensorflow import keras
-from CNN import cnn_predict
-
-
-def CNN_init():
-    unet = keras.models.load_model('unet.h5')
-    cnn = keras.models.load_model('cnn.h5')
-    print('正在启动中,请稍等...')
-    cnn_predict(cnn, [np.zeros((80, 240, 3))])
-    print("已启动,开始识别吧！")
-    return unet, cnn
