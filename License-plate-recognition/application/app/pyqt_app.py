@@ -40,7 +40,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def openFile(self):
         # self指向自身，"Open File"为文件名，"./"为当前路径，最后为文件类型筛选器
-        fname, ftype = QFileDialog.getOpenFileName(self, "Open File", "./",
+        fname, ftype = QFileDialog.getOpenFileName(self, "Open File", "../ui/img",
                                                    "JPG(*.jpg);;PNG(*.png)")  # 如果添加一个内容则需要加两个分号
         if os.path.isfile(fname):
             self.file_path = fname
