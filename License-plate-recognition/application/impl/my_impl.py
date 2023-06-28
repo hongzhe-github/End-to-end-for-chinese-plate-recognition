@@ -42,8 +42,8 @@ def process_image(img_src_path, unet, cnn) -> (Image, Image, str):
     if Lic_pred is None: return None
     # 识别成功
 
-    labeled_image = Image.fromarray(img_src_copy[:, :, ::-1])
-    resized_image = Image.fromarray(Lic_pred[0][0][:, :, ::-1])
+    labeled_image = Image.fromarray(img_src_copy[:, :, ::-1])  # 将BGR转为RGB
+    resized_image = Image.fromarray(Lic_pred[0][0][:, :, ::-1]) # 将BGR转为RGB
     predicted_text = Lic_pred[0][1]
 
     return labeled_image, resized_image, predicted_text
